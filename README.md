@@ -48,23 +48,26 @@ CREATE TABLE rm_workplace (
 DROP TABLE IF EXISTS rm_resource;
 CREATE TABLE rm_resource(
 	workplace_id BIGINT,
-    resource_id BIGINT primary key auto_increment,
-    place VARCHAR(255) NOT NULL,
-    created_dt DATETIME NOT NULL,
-    updated_dt DATETIME NOT NULL,
-    foreign key(workplace_id) REFERENCES rm_workplace (workplace_id)
+    	resource_id BIGINT primary key auto_increment,
+    	place VARCHAR(255) NOT NULL,
+    	created_dt DATETIME NOT NULL,
+    	updated_dt DATETIME NOT NULL,
+    	foreign key(workplace_id) REFERENCES rm_workplace (workplace_id)
 );
   
   
 DROP TABLE IF EXISTS rm_usage; 
 CREATE TABLE rm_usage(
 	usage_id BIGINT primary key AUTO_INCREMENT,
-    resource_id BIGINT,
-    usage_status VARCHAR(255) NOT NULL,
-    resource_user TEXT NOT NULL,
-    usage_st DATETIME NOT NULL,
+   	resource_id BIGINT,
+    	usage_status VARCHAR(255) NOT NULL,
+     	resource_user_name VARCHAR(255) NOT NULL,
+    	resource_user_phone INT NOT NULL,
+    	resource_user_email VARCHAR(255),
+    	resource_user_note TEXT,
+    	usage_st DATETIME NOT NULL,
 	usage_ed DATETIME NOT NULL,
-    foreign key(resource_id) REFERENCES rm_resource(resource_id)
+    	foreign key(resource_id) REFERENCES rm_resource(resource_id)
 );
 		
 ```
