@@ -1,4 +1,4 @@
-package com.rm.dto;
+package com.rm.dto.workplace;
 
 import java.time.LocalDateTime;
 

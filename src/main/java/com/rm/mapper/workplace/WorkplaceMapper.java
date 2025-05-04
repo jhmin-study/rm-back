@@ -1,8 +1,8 @@
-package com.rm.mapper;
+package com.rm.mapper.workplace;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.rm.dto.Workplace;
+import com.rm.dto.workplace.Workplace;
 
 @Mapper
 public interface WorkplaceMapper {

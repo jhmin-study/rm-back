@@ -1,12 +1,12 @@
-package com.rm.workplace.controller;
+package com.rm.controller.workplace;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rm.dto.WorkplaceDTO;
-import com.rm.service.WorkplaceService;
+import com.rm.dto.workplace.WorkplaceDTO;
+import com.rm.service.workplace.WorkplaceService;
 
 @RestController
 public class WorkplaceController {

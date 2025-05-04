@@ -1,10 +1,10 @@
-package com.rm.service;
+package com.rm.service.workplace;
 
 import org.springframework.stereotype.Service;
 
-import com.rm.dto.Workplace;
-import com.rm.dto.WorkplaceDTO;
-import com.rm.mapper.WorkplaceMapper;
+import com.rm.dto.workplace.Workplace;
+import com.rm.dto.workplace.WorkplaceDTO;
+import com.rm.mapper.workplace.WorkplaceMapper;
 
 @Service
 public class WorkplaceService {

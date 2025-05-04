@@ -16,7 +16,7 @@
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
 	
-	
+
 	<select id="selectWorkplaceById" resultMap="workplaceResultMap">
 		select 
 				workplace_id,
@@ -34,19 +34,8 @@
 		from rm_workplace where workplace_id = #{workplaceId}
 	</select>
 	
-<!--
-workplace_id
-user_id
-business_type_nm
-business_reg_no
-business_name
-owner_name
-phone_number
-address
-detail_address
-status
-created_at
-updated_at
--->
+	<select id = "countWorkplaces" resultType="int">
+		select count(*) from rm_workplace where user_id = #{userId}
+	</select>
 
 </mapper>
