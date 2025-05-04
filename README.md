@@ -65,8 +65,8 @@ CREATE TABLE rm_usage(
     	resource_user_phone INT NOT NULL,
     	resource_user_email VARCHAR(255),
     	resource_user_note TEXT,
-    	usage_st DATETIME NOT NULL,
-	usage_ed DATETIME NOT NULL,
+    	usage_st DATE NOT NULL,
+	usage_ed DATE NOT NULL,
     	foreign key(resource_id) REFERENCES rm_resource(resource_id)
 );
 		

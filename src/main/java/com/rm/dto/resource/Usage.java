@@ -10,7 +10,10 @@ import lombok.Setter;
 public class Usage {
 	private long usageId;
 	private String usageStatus;
-	private String resourceUser;
+	private String resourceUserName;
+	private String resourceUserPhone;
+	private String resourceUserEmail;
+	private String resourceUserNote;
 	private LocalDate usageSt;
 	private LocalDate usageEd;
 }

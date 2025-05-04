@@ -1,0 +1,21 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rm.mapper.resource.UsageMapper">
+<insert id="createUsage" parameterType="com.rm.dto.resource.Usage">
+	INSERT INTO rm_usage
+	(usage_status, 
+	resource_user_name, 
+	resource_user_phone, 
+	resource_user_email, 
+	resource_user_note, 
+	usage_st, 
+	usage_ed)
+	VALUES (#{usageStatus},
+	#{resourceUserName},
+	#{resourceUserPhone},
+	#{resourceUserEmail},
+	#{resourceUserNote},
+	#{usageSt},
+	#{usageEd})
+</insert>
+</mapper>
