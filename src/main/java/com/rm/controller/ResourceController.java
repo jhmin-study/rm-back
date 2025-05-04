@@ -1,4 +1,4 @@
-package com.rm.resource.controller;
+package com.rm.controller;
 
 public class ResourceController {
 

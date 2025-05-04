@@ -1,4 +1,4 @@
-package com.rm.resource.dto;
+package com.rm.dto;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsageDTO {
+public class Usage {
 	private long usageId;
 	private String usageStatus;
 	private String resourceUser;
