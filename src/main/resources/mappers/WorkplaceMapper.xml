@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rm.mapper.WorkplaceMapper">
-	<resultMap id="workplaceResultMap" type="com.rm.dto.Workplace">
+<mapper namespace="com.rm.mapper.workplace.WorkplaceMapper">
+	<resultMap id="workplaceResultMap" type="com.rm.dto.workplace.Workplace">
 		<id property="workplaceId" column="workplace_id" />
 		<result property="userId" column="user_id" />
 		<result property="businessTypeNm" column="business_type_nm" />
@@ -37,5 +37,49 @@
 	<select id = "countWorkplaces" resultType="int">
 		select count(*) from rm_workplace where user_id = #{userId}
 	</select>
+	
+	<insert id="createWorkplace" parameterType="com.rm.dto.workplace.Workplace" useGeneratedKeys="true" keyProperty="workplaceId">
+		insert into rm_workplace (
+			user_id,
+			business_type_nm,
+			business_reg_no,
+			business_name,
+			owner_name,
+			phone_number,
+			address,
+			detail_address,
+			status
+		)
+		values (
+			#{userId},
+			#{businessTypeNm},
+			#{businessRegNo},
+			#{businessName},
+			#{ownerName},
+			#{phoneNumber},
+			#{address},
+			#{detailAddress},
+			#{status}
+		)
+	
+	</insert>
+	
+	<delete id ="deleteWorkplace">
+		delete from rm_workplace
+		where workplace_id = #{workplaceId}
+	</delete>
+	
+	<update id="updateWorkplaceById" parameterType="com.rm.dto.workplace.Workplace">
+		update rm_workplace
+		set business_type_nm = #{businessTypeNm},
+				business_reg_no = #{businessRegNo},
+				business_name = #{businessName},
+				owner_name = #{ownerName},
+				phone_number = #{phoneNumber},
+				address = #{address},
+				detail_address = #{detailAddress},
+				status	= #{status}
+		where workplace_id = #{workplaceId}
+	</update>
 
 </mapper>
