@@ -1,4 +1,4 @@
-package com.rm.dto;
+package com.rm.dto.resource;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Resource {
+public class ResourceDTO {
 	private long resourceId;
 	private String place;
 	private LocalDate createdAt;
