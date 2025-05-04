@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rm.mapper.WorkplaceMapper">
+	<resultMap id="workplaceResultMap" type="com.rm.dto.Workplace">
+		<id property="workplaceId" column="workplace_id" />
+		<result property="userId" column="user_id" />
+		<result property="businessTypeNm" column="business_type_nm" />
+		<result property="businessRegNo" column="business_reg_no" />
+		<result property="businessName" column="business_name" />
+		<result property="ownerName" column="owner_name" />
+		<result property="phoneNumber" column="phone_number" />
+		<result property="address" column="address" />
+		<result property="detailAddress" column="detail_address" />
+		<result property="status" column="status" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+	</resultMap>
+	
+	
+	<select id="selectWorkplaceById" resultMap="workplaceResultMap">
+		select 
+				workplace_id,
+				user_id,
+				business_type_nm,
+				business_reg_no,
+				business_name,
+				owner_name,
+				phone_number,
+				address,
+				detail_address,
+				status,
+				created_at,
+				updated_at
+		from rm_workplace where workplace_id = #{workplaceId}
+	</select>
+	
+<!--
+workplace_id
+user_id
+business_type_nm
+business_reg_no
+business_name
+owner_name
+phone_number
+address
+detail_address
+status
+created_at
+updated_at
+-->
+
+</mapper>

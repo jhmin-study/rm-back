@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Workplace {
+public class WorkplaceDTO {
 	private Long workplaceId;
 	private String userId;
 	private String businessTypeNm;
@@ -20,5 +20,4 @@ public class Workplace {
 	private String status;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
-
 }
