@@ -84,7 +84,8 @@ public class WorkplaceController {
 			workplace.setStatus(dto.getStatus());
 		}
 
-		workplaceService.updateWorkplaceById(dto);
+		workplaceService.updateWorkplaceById(workplace);
+		System.out.println(dto);
 			
 		return ResponseEntity.status(200).body("수정 성공!");
 	}
