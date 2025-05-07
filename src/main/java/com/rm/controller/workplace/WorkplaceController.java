@@ -1,10 +1,12 @@
 package com.rm.controller.workplace;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +35,7 @@ public class WorkplaceController {
 	
 	// 사업장 정보 등록
 	@PostMapping("/api/workplace")
-	public Long createWorkplace(@RequestBody WorkplaceDTO dto) {		
+	public Long createWorkplace(@ModelAttribute WorkplaceDTO dto) {		
 		System.out.println(dto);
 		Long res = workplaceService.createWorkplace(dto);
 		System.out.println(res + "번 사업장이 생성되었음");
@@ -89,4 +91,11 @@ public class WorkplaceController {
 			
 		return ResponseEntity.status(200).body("수정 성공!");
 	}
+	
+	// 전체 사업장 조회
+	@GetMapping("/api/workplace")
+	public List<WorkplaceDTO> getAllWorkplaces() {
+	    return workplaceService.selectAllWorkplaces();
+	}
+
 }

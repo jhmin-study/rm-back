@@ -1,5 +1,7 @@
 package com.rm.mapper.workplace;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.rm.dto.workplace.Workplace;
@@ -17,4 +19,7 @@ public interface WorkplaceMapper {
 	public void deleteWorkplace(Long workplaceId);
 	// 사업장 수정
 	public void updateWorkplaceById(WorkplaceDTO dto);
+	
+	//전체 사업장 리스트 조회
+	public List<Workplace> selectAllWorkplaces();
 }

@@ -1,6 +1,8 @@
 package com.rm.service.workplace;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -79,5 +81,30 @@ public class WorkplaceService {
 	public void updateWorkplaceById(WorkplaceDTO dto) {
 		workplaceMapper.updateWorkplaceById(dto);
 	}
+	
+	public List<WorkplaceDTO> selectAllWorkplaces() {
+	    List<Workplace> workplaces = workplaceMapper.selectAllWorkplaces();
+	    List<WorkplaceDTO> dtoList = new ArrayList<>();
+
+	    for (Workplace wp : workplaces) {
+	        WorkplaceDTO dto = new WorkplaceDTO();
+	        dto.setWorkplaceId(wp.getWorkplaceId());
+	        dto.setUserId(wp.getUserId());
+	        dto.setBusinessTypeNm(wp.getBusinessTypeNm());
+	        dto.setBusinessRegNo(wp.getBusinessRegNo());
+	        dto.setBusinessName(wp.getBusinessName());
+	        dto.setOwnerName(wp.getOwnerName());
+	        dto.setPhoneNumber(wp.getPhoneNumber());
+	        dto.setAddress(wp.getAddress());
+	        dto.setDetailAddress(wp.getDetailAddress());
+	        dto.setStatus(wp.getStatus());
+	        dto.setCreatedAt(wp.getCreatedAt());
+	        dto.setUpdatedAt(wp.getUpdatedAt());
+	        dtoList.add(dto);
+	    }
+
+	    return dtoList;
+	}
+
 
 }
