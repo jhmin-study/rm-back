@@ -68,7 +68,7 @@ public class SecurityConfig {
 		http.cors((auth)-> auth.configurationSource((request)->{
 	         CorsConfiguration config = new CorsConfiguration();
 	         // 어디로부터 들어오는 요청을 허용할 것인지, VUE의 포트번호를 입력
-	         config.setAllowedOrigins(Collections.singletonList("http://localhost:8002"));
+	         config.setAllowedOrigins(Collections.singletonList("http://localhost:8004"));
 	         // 어떤 요청방식에 대해 허용할 것인지 (GET, DELETE ,... )
 	         config.setAllowedMethods(Collections.singletonList("*"));
 	         
