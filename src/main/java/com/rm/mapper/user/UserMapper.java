@@ -9,7 +9,9 @@ import org.apache.ibatis.annotations.Mapper;
 /* 기능설명 : 회원 관련 Mapper 클래스                                         */
 /* ************************************************************************** */
 @Mapper
-public class UserMapper {
+public interface UserMapper {
+
+	public Integer checkId(String userId);
 
 }
 /* --------------------------- End of UserMapper ---------------------------- */
