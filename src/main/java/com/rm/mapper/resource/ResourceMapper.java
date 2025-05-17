@@ -12,4 +12,6 @@ public interface ResourceMapper {
 	public void createResource(Resource rse);
 
 	public List<Resource> getResourceList(long workplaceId);
+
+	public void updateResource(Resource rs);
 }

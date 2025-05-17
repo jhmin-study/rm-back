@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +31,13 @@ public class ResourceController {
 	@GetMapping("api/resource/{workplaceId}")
 	public List<ResourceDTO> getResourceList(@PathVariable(name="workplaceId") long workplaceId){
 		return resourceService.getResourceList(workplaceId);
+	}
+	
+	@PutMapping("api/resource/{workplaceId}")
+	public String updateResource(
+			@PathVariable(name="workplaceId") long workplaceId,
+			@RequestBody ResourceDTO dto) {
+		resourceService.updateResource(workplaceId, dto);
+		return "성공";
 	}
 }
