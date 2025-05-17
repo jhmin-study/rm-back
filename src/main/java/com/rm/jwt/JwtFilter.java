@@ -9,6 +9,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.rm.dto.user.CustomUserDetails;
 import com.rm.dto.user.UserDTO;
+import com.rm.dto.user.UserEntity;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -49,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		
 		// 나중에 사용할 수도 있으니 Session에 토큰 payload에 넣었던 정보를 저장해 주자
 		// 단, 이때의 session은 Stateless 형태이며, 이 요청이 끝나면 사라짐
-		UserDTO user = new UserDTO();
+		UserEntity user = new UserEntity();
 		user.setUserId(jwtUtils.getUserId(jwt));
 		
 		// Spring Security에서 User정보 저장하는 UserDetails 형식으로 변환

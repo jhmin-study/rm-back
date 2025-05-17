@@ -33,4 +33,10 @@ INSERT INTO rm_user (
     );
 </insert>
 
+<select id="getUserById" parameterType="com.rm.dto.user.UserEntity">
+SELECT *
+FROM rm_user
+WHERE user_id = #{userId};
+</select>
+
 </mapper>

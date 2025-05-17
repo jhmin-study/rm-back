@@ -19,6 +19,9 @@ public interface UserMapper {
 	// 회원가입
 	public void signup(UserEntity userEntity);
 	
+	// ID로 사용자 정보 조회
+	public UserEntity getUserById(String username);
+	
 	
 }
 /* --------------------------- End of UserMapper ---------------------------- */
