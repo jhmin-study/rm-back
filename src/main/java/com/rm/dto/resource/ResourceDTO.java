@@ -1,6 +1,7 @@
 package com.rm.dto.resource;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +13,7 @@ public class ResourceDTO {
 	private long workplaceId;
 	private String place;
 	private String resourceName;
-	private String usageStatus;
-	private String resourceUserName;
-	private String resourceUserPhone;
-	private LocalDate usageSt;
-	private LocalDate usageEd;
+	private Usage resourceUsage;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
 }

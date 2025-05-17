@@ -21,7 +21,7 @@
        
    
        <!-- 1:N 관계 매핑 -->
-       <collection property="resourceUsage" ofType="com.rm.dto.resource.Usage">
+       <association property="resourceUsage" javaType="com.rm.dto.resource.Usage">
            <id property="usageId" column="usage_id" />
 	       <result property="resourceId" column="usage_resource_id" />
 	       <result property="usageStatus" column="usage_status" />
@@ -29,7 +29,7 @@
 	       <result property="resourceUserPhone" column="resource_user_phone" />
 	       <result property="usageSt" column="usage_st" />
 	       <result property="usageEd" column="usage_ed" />
-       </collection>
+       </association>
    </resultMap>
 <select id="getResourceList" parameterType="Long" resultMap="resourceResultMap">
 	SELECT
@@ -44,6 +44,8 @@
 	FROM rm_resource r
 	LEFT JOIN rm_usage u
 	ON r.resource_id = u.resource_id
-	WHERE workplace_id = #{workplaceId}
+	WHERE r.workplace_id = #{workplaceId} AND u.usage_st > NOW()
+	ORDER BY u.usage_st ASC
+	LIMIT 1;
 </select>
 </mapper>

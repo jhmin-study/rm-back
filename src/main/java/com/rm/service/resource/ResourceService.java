@@ -29,11 +29,7 @@ public class ResourceService {
 			dto.setResourceId(resource.getResourceId());
 			dto.setResourceName(resource.getResourceName());
 			dto.setPlace(resource.getPlace());
-			dto.setResourceUserName(resource.getResourceUserName());
-			dto.setResourceUserPhone(resource.getResourceUserPhone());
-			dto.setUsageSt(resource.getUsageSt());
-			dto.setUsageEd(resource.getUsageEd());
-			
+			dto.setResourceUsage(resource.getResourceUsage());
 			dtoList.add(dto);
 		}
 		return dtoList;
