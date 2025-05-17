@@ -34,6 +34,25 @@ public class UserController {
 		return userService.checkId(userDTO.getUserId());
 	}
 	
+	// =========================================================================
+	// 메소드 기능 : 회원가입
+	// EndPoint : /api/user/signup
+	// 리턴값   : 회원가입 성공 -> success
+	//            회원가입 실패 -> fail
+	// =========================================================================
+	@PostMapping("/api/user/signup")
+	public String Signup(@RequestBody UserDTO userDTO) {
+		System.out.println(userDTO.getUserId());
+		// 회원가입 처리
+		Boolean res = userService.Signup(userDTO);
+		
+		if (res) {
+			return "success";
+		}
+		else {
+			return "fail";
+		}
+	}
 	
 }
 /* ------------------------- End of UserController -------------------------- */

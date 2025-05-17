@@ -7,4 +7,30 @@ SELECT count(*)
  WHERE user_id = #{userId};
 </select>
 
+<insert id="signup" parameterType="com.rm.dto.user.UserEntity">
+INSERT INTO rm_user (
+    user_Id,
+    password,
+    last_password,
+    user_nm,
+    user_phno,
+    quit_yn,
+    quit_dt,
+    signup_dt,
+    create_dt,
+    update_dt
+    ) VALUES (
+    #{userId},
+    #{password},
+    #{lastPassword},
+    #{userNm},
+    #{userPhno},
+    #{quitYn},
+    #{quitDt},
+    #{signupDt},
+    #{createDt},
+    #{updateDt}
+    );
+</insert>
+
 </mapper>
