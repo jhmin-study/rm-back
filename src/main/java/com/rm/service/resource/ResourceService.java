@@ -35,4 +35,12 @@ public class ResourceService {
 		return dtoList;
 	}
 
+	public void updateResource(long workplaceId, ResourceDTO dto) {
+		Resource rs = new Resource();
+		rs.setResourceName(dto.getResourceName());
+		rs.setPlace(dto.getPlace());
+		rs.setWorkplaceId(workplaceId);
+		remap.updateResource(rs);
+	}
+
 }

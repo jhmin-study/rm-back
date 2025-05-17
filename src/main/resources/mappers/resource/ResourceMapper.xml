@@ -48,4 +48,11 @@
 	ORDER BY u.usage_st ASC
 	LIMIT 1;
 </select>
+<update id="updateResource" parameterType="com.rm.dto.resource.Resource">
+	UPDATE rm_resource
+	SET
+	resource_name = #{resourceName},
+	place = #{place}
+	WHERE workplace_id = #{workplaceId};
+</update>
 </mapper>
