@@ -49,9 +49,10 @@ DROP TABLE IF EXISTS rm_resource;
 CREATE TABLE rm_resource(
 	workplace_id BIGINT,
     	resource_id BIGINT primary key auto_increment,
+    	resource_name VARCHAR(255) NOT NULL,
     	place VARCHAR(255) NOT NULL,
-    	created_dt DATETIME NOT NULL,
-    	updated_dt DATETIME NOT NULL,
+    	created_dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    	updated_dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     	foreign key(workplace_id) REFERENCES rm_workplace (workplace_id)
 );
   

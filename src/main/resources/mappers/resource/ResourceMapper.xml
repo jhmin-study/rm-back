@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rm.mapper.resource.ResourceMapper">
+<insert id="createResource" parameterType="com.rm.dto.resource.Resource">
+	INSERT INTO rm_resource(
+		workplace_id
+		resource_name,
+		place
+	)
+	VALUES (
+		#{workplaceId},
+		#{resourceName},
+		#{place}
+	)
+</insert>
+   <resultMap id="resourceResultMap" type="com.rm.dto.resource.Resource">
+       <id property="resourceId" column="resource_id" />
+       <result property="resourceName" column="resource_name" />
+       <result property="place" column="place" />
+       
+   
+       <!-- 1:N 관계 매핑 -->
+       <collection property="resourceUsage" ofType="com.rm.dto.resource.Usage">
+           <id property="usageId" column="usage_id" />
+	       <result property="resourceId" column="usage_resource_id" />
+	       <result property="usageStatus" column="usage_status" />
+	       <result property="resourceUserName" column="reource_user_name" />
+	       <result property="resourceUserPhone" column="resource_user_phone" />
+	       <result property="usageSt" column="usage_st" />
+	       <result property="usageEd" column="usage_ed" />
+       </collection>
+   </resultMap>
+<select id="getResourceList" parameterType="Long" resultMap="resourceResultMap">
+	SELECT
+	r.resource_id,
+	r.resource_name,
+	r.place,
+	u.usage_status,
+	u.resource_user_name,
+	u.resource_user_phone,
+	u.usage_st,
+	u.usage_ed
+	FROM rm_resource r
+	LEFT JOIN rm_usage u
+	ON r.resource_id = u.resource_id
+	WHERE workplace_id = #{workplaceId}
+</select>
+</mapper>

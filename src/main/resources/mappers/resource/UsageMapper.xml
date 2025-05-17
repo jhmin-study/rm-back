@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.rm.mapper.resource.UsageMapper">
 <insert id="createUsage" parameterType="com.rm.dto.resource.Usage">
 	INSERT INTO rm_usage
-	(usage_status, 
+	(usage_status,
+	resource_id = #{resourceId} 
 	resource_user_name, 
 	resource_user_phone, 
 	resource_user_email, 
@@ -18,4 +20,20 @@
 	#{usageSt},
 	#{usageEd})
 </insert>
+<select id="getUsageInfo" parameterType="Integer" resultType="com.rm.dto.resource.Usage">
+	SELECT * FROM rm_usage
+	WHERE resource_id = #{resourceId}
+</select>
+<update id="updateUsageInfo" parameterType="com.rm.dto.resource.Usage" >
+	UPDATE rm_usage
+	SET
+	usage_status = #{usageStatus},
+	resource_user_name = #{resourceUserName},
+	resource_user_phone = #{resourceUserPhone},
+	resource_user_email = #{resourceUserEmail},
+	resource_user_note = #{resourceUserNote},
+	usage_st = #{usageSt},
+	usage_ed = #{usageEd}
+	WHERE resource_id = #{resourceId}
+</update>
 </mapper>
