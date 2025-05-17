@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class UsageDTO {
 	private long usageId;
+	private long resourceId;
 	private String usageStatus;
 	private String resourceUserName;
 	private String resourceUserPhone;

@@ -9,4 +9,8 @@ public interface UsageMapper {
 
 	public void createUsage(Usage usage);
 
+	public Usage getUsageInfo(Long resourceId);
+
+	public void updateUsageInfo(Usage usage);
+
 }
