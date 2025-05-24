@@ -34,6 +34,22 @@
 		from rm_workplace where workplace_id = #{workplaceId}
 	</select>
 	
+	<select id="selectWorkplacesByUserId" resultMap="workplaceResultMap">
+		select 
+				workplace_id,
+				user_id,
+				business_type_nm,
+				business_reg_no,
+				business_name,
+				owner_name,
+				phone_number,
+				address,
+				detail_address,
+				status,
+				created_at,
+				updated_at
+		from rm_workplace where user_id = #{Id}
+	</select>
 	<select id = "countWorkplaces" resultType="int">
 		select count(*) from rm_workplace where user_id = #{userId}
 	</select>
@@ -47,10 +63,8 @@
 			owner_name,
 			phone_number,
 			address,
-			detail_address
-			<if test="status != null">
-      		, status
-    		</if>
+			detail_address,
+			status
 		)
 		values (
 			#{userId},
@@ -60,10 +74,8 @@
 			#{ownerName},
 			#{phoneNumber},
 			#{address},
-			#{detailAddress}
-			<if test="status != null">
-      		, #{status}
-    		</if>
+			#{detailAddress},
+			#{status}
 		)
 	
 	</insert>
@@ -85,22 +97,5 @@
 				status	= #{status}
 		where workplace_id = #{workplaceId}
 	</update>
-	
-	<select id="selectAllWorkplaces" resultMap="workplaceResultMap">
-	    SELECT 
-	        workplace_id,
-	        user_id,
-	        business_type_nm,
-	        business_reg_no,
-	        business_name,
-	        owner_name,
-	        phone_number,
-	        address,
-	        detail_address,
-	        status,
-	        created_at,
-	        updated_at
-	    FROM rm_workplace
-	</select>
 
 </mapper>
