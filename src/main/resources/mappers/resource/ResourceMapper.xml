@@ -31,28 +31,59 @@
 	       <result property="usageEd" column="usage_ed" />
        </association>
    </resultMap>
-<select id="getResourceList" parameterType="Long" resultMap="resourceResultMap">
-	SELECT
-	r.resource_id,
-	r.resource_name,
-	r.place,
-	u.usage_status,
-	u.resource_user_name,
-	u.resource_user_phone,
-	u.usage_st,
-	u.usage_ed
-	FROM rm_resource r
-	LEFT JOIN rm_usage u
-	ON r.resource_id = u.resource_id AND u.usage_st >= NOW()
-	WHERE r.workplace_id = #{workplaceId}
-	ORDER BY u.usage_st ASC
-	LIMIT 1;
-</select>
+	<select id="getResourceList" parameterType="Long" resultMap="resourceResultMap">
+	    <![CDATA[
+	    SELECT
+	        r.resource_id,
+	        r.resource_name,
+	        r.place,
+	        u.usage_status,
+	        u.resource_user_name,
+	        u.resource_user_phone,
+	        u.usage_st,
+	        u.usage_ed
+	    FROM rm_resource r
+	    LEFT JOIN (
+	        SELECT 
+	            usage_id,
+	            resource_id,
+	            usage_status,
+	            resource_user_name,
+	            resource_user_phone,
+	            resource_user_email,
+	            resource_user_note,
+	            usage_st,
+	            usage_ed
+	        FROM rm_usage
+	        WHERE 
+	            (
+	                -- 현재 날짜가 usage_st와 usage_ed 사이에 포함되는 경우
+	                (usage_st <= CURDATE() AND usage_ed >= CURDATE())
+	                
+	                -- 또는 usage_st가 현재 시간과 가장 가까운 경우 (미래에 예약된 경우)
+	                OR (usage_st > CURDATE())
+	            )
+	            AND resource_id IN (
+	                -- 각 resource_id별로 가장 가까운 사용 내역을 선택
+	                SELECT resource_id
+	                FROM rm_usage
+	                WHERE 
+	                    (usage_st <= CURDATE() AND usage_ed >= CURDATE())
+	                OR (usage_st > CURDATE())
+	                GROUP BY resource_id
+	                HAVING usage_st = MIN(usage_st)  -- 가장 가까운 usage_st를 가진 레코드 선택
+	            )
+	        ORDER BY resource_id, usage_st
+	    ) u ON r.resource_id = u.resource_id 
+	    WHERE r.workplace_id = #{workplaceId}
+	    ORDER BY r.resource_id ASC;
+	 ]]>
+	</select>
 <update id="updateResource" parameterType="com.rm.dto.resource.Resource">
 	UPDATE rm_resource
 	SET
 	resource_name = #{resourceName},
 	place = #{place}
-	WHERE workplace_id = #{workplaceId};
+	WHERE resource_id = #{resourceId};
 </update>
 </mapper>

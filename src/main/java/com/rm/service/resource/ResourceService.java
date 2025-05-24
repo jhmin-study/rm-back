@@ -39,11 +39,11 @@ public class ResourceService {
 		return dtoList;
 	}
 
-	public void updateResource(long workplaceId, ResourceDTO dto) {
+	public void updateResource(long resourceId, ResourceDTO dto) {
 		Resource rs = new Resource();
+		rs.setResourceId(resourceId);		
 		rs.setResourceName(dto.getResourceName());
 		rs.setPlace(dto.getPlace());
-		rs.setWorkplaceId(workplaceId);
 		remap.updateResource(rs);
 	}
 
