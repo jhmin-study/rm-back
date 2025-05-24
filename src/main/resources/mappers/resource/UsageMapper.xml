@@ -22,7 +22,9 @@
 </insert>
 <select id="getUsageInfo" parameterType="Integer" resultType="com.rm.dto.resource.Usage">
 	SELECT * FROM rm_usage
-	WHERE resource_id = #{resourceId}
+	WHERE resource_id = #{resourceId} AND usage_st > NOW()
+	ORDER BY usage_st ASC
+	LIMIT 1;
 </select>
 <update id="updateUsageInfo" parameterType="com.rm.dto.resource.Usage" >
 	UPDATE rm_usage

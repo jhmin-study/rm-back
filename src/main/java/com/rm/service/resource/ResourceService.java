@@ -12,6 +12,10 @@ import com.rm.mapper.resource.ResourceMapper;
 @Service
 public class ResourceService {
 	ResourceMapper remap;
+	
+    public ResourceService(ResourceMapper remap) {
+        this.remap = remap;
+    }
 
 	public void createResource(ResourceDTO dto, Long workplaceId) {
 		Resource rse = new Resource();

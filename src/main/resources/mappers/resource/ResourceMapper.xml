@@ -4,7 +4,7 @@
 <mapper namespace="com.rm.mapper.resource.ResourceMapper">
 <insert id="createResource" parameterType="com.rm.dto.resource.Resource">
 	INSERT INTO rm_resource(
-		workplace_id
+		workplace_id,
 		resource_name,
 		place
 	)
@@ -43,8 +43,8 @@
 	u.usage_ed
 	FROM rm_resource r
 	LEFT JOIN rm_usage u
-	ON r.resource_id = u.resource_id
-	WHERE r.workplace_id = #{workplaceId} AND u.usage_st > NOW()
+	ON r.resource_id = u.resource_id AND u.usage_st >= NOW()
+	WHERE r.workplace_id = #{workplaceId}
 	ORDER BY u.usage_st ASC
 	LIMIT 1;
 </select>
