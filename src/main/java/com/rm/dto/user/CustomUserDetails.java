@@ -7,9 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
-	UserDTO user;
+	UserEntity user;
 	
-	public CustomUserDetails(UserDTO user) {
+	public CustomUserDetails(UserEntity user) {
 		this.user = user;
 	}
 

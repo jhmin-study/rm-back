@@ -20,6 +20,8 @@ CREATE TABLE rm_user (
     user_id VARCHAR(255) PRIMARY KEY,           -- 이메일 ID
     password VARCHAR(255) NOT NULL,             -- 현재 비밀번호
     last_password VARCHAR(255),                 -- 이전 비밀번호
+    user_nm VARCHAR(255) NOT NULL,              -- 회원이름
+    user_phno VARCHAR(255),                     -- 회원휴대전화번호("-" 없이 문자열로 기재)
     quit_yn CHAR(1),                            -- 탈퇴 여부 ('Y' 또는 NULL)
     quit_dt DATETIME,                           -- 탈퇴 일시
     signup_dt DATETIME DEFAULT CURRENT_TIMESTAMP, -- 가입 일자 (기본값: 현재일시)

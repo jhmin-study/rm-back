@@ -42,21 +42,28 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		// form-data 형식의 body에 username, password라는 key값에 들어있는 데이터만 받아올 수 있다.
 //		String id = obtainUsername(request);
 //		String pwd = obtainPassword(request);
-		
+		System.err.println("attemptAuthentication() 메소드 호출됨");
+	
 		try {
 			ServletInputStream inputStream = request.getInputStream();
+			System.err.println("attemptAuthentication() 메소드 호출됨1");
 			String body = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+			System.err.println("attemptAuthentication() 메소드 호출됨2");
 			
 			
 			ObjectMapper objectMapper = new ObjectMapper();
+			System.err.println("attemptAuthentication() 메소드 호출3");
 			UserDTO udto = objectMapper.readValue(body, UserDTO.class);
+			System.err.println("attemptAuthentication() 메소드 호출4");
 			
 			String id = udto.getUserId();
 			String pwd = udto.getPassword();
+			System.err.println("attemptAuthentication() 메소드 호출5");
 			
 			
 			
 			UsernamePasswordAuthenticationToken userInfo = new UsernamePasswordAuthenticationToken( id, pwd , null);
+			System.err.println("attemptAuthentication() 메소드 호출6");
 			
 			
 			return authenticationManager.authenticate(userInfo);
