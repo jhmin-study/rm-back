@@ -3,9 +3,12 @@ package com.rm.redis;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import org.springframework.stereotype.Component;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class RandomAuthUtil {
 	private static final String CHAR_DIGITS = "0123456789";
 	
