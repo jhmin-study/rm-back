@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,13 +30,12 @@ public class WorkplaceController {
 	@GetMapping("/api/workplace/{workplaceId}")
 	public WorkplaceDTO getWorkplaceById(
 			@PathVariable(name = "workplaceId") Long workplaceId) {
-		
 		return workplaceService.selectWorkplaceById(workplaceId);
 	}
 	
 	// 사업장 정보 등록
 	@PostMapping("/api/workplace")
-	public Long createWorkplace(@ModelAttribute WorkplaceDTO dto) {		
+	public Long createWorkplace(@RequestBody WorkplaceDTO dto) {		
 		System.out.println(dto);
 		Long res = workplaceService.createWorkplace(dto);
 		System.out.println(res + "번 사업장이 생성되었음");
@@ -52,7 +52,7 @@ public class WorkplaceController {
 	}
 	
 	// 사업장 수정
-	@PostMapping("/api/workplace/{workplaceId}")
+	@PutMapping("/api/workplace/{workplaceId}")
 	public ResponseEntity<String> updateWorkplaceById(@PathVariable(name="workplaceId") long workplaceId, @RequestBody WorkplaceDTO dto) {
 		WorkplaceDTO workplace = workplaceService.selectWorkplaceById(workplaceId);
 		
