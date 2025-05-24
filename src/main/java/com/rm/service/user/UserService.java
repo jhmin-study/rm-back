@@ -9,6 +9,9 @@ import com.rm.dto.user.UserDTO;
 import com.rm.dto.user.UserEntity;
 import com.rm.mapper.user.UserMapper;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 /* ************************************************************************** */
 /* Class명 : UserService                                                      */
 /* 개발자  : 김재용                                                           */
@@ -16,9 +19,12 @@ import com.rm.mapper.user.UserMapper;
 /* 기능설명 : 회원 관련 Service 클래스                                        */
 /* ************************************************************************** */
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class UserService {
 	BCryptPasswordEncoder encoder;
 	UserMapper userMapper;
+	
 	
 	public UserService(BCryptPasswordEncoder encoder, UserMapper userMapper) {
 		this.encoder = encoder;
@@ -101,6 +107,6 @@ public class UserService {
 		
 		return true;
 	}
-
+	
 }   // End of Class
 /* -------------------------- End of UserService ---------------------------- */
