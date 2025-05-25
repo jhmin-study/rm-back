@@ -95,7 +95,7 @@ public class SecurityConfig {
 		// /api/join으로 GET요청은 로그인 하지 않아도 할 수 있도록 하고 싶음
 		// authorizeHttpRequests --> 요청에 대한 권한을 설정하는 메소드
 		// TODO : 개발 중에는 permitAll 설정. 주소 추가할 때마다 추가해줘야 함
-		http.authorizeHttpRequests( (auth)-> auth.requestMatchers("/api/**").permitAll()
+		http.authorizeHttpRequests( (auth)-> auth.requestMatchers("/api/**").authenticated()
 				.anyRequest().authenticated() 
 			);
 		

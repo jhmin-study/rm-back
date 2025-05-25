@@ -98,7 +98,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			role = auth.getAuthority();
 		}
 		
-		String token = jwtUtils.createJwt(userId, role, 60*300L );  // 30분으로 설정
+		String token = jwtUtils.createJwt(userId, role, 30*60*1000L );  // 30분으로 설정
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
