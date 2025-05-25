@@ -72,7 +72,7 @@ public class WorkplaceService {
 	}
 	
 	public Boolean deleteWorkplace(Long workplaceId) {
-		Workplace wp = workplaceMapper.selectWorkplaceById(workplaceId); // userid 추가해야 할지도
+		Workplace wp = workplaceMapper.selectWorkplaceById(workplaceId);
 		
 		if(wp == null) {
 			return false;
