@@ -21,10 +21,44 @@
 	#{usageEd})
 </insert>
 <select id="getUsageInfo" parameterType="Integer" resultType="com.rm.dto.resource.Usage">
+	<![CDATA[
 	SELECT * FROM rm_usage
-	WHERE resource_id = #{resourceId} AND usage_st > NOW()
-	ORDER BY usage_st ASC
-	LIMIT 1;
+	WHERE 
+	(
+        -- 현재 날짜가 usage_st와 usage_ed 사이에 포함되는 경우
+        (usage_st <= CURDATE() AND usage_ed >= CURDATE())
+        
+        -- 또는 usage_st가 현재 시간과 가장 가까운 경우 (미래에 예약된 경우)
+        OR (usage_st > CURDATE())
+	    )
+	    AND resource_id IN (
+	        -- 각 resource_id별로 가장 가까운 사용 내역을 선택
+	        SELECT resource_id
+	        FROM rm_usage
+	        WHERE 
+	            (usage_st <= CURDATE() AND usage_ed >= CURDATE())
+	        OR (usage_st > CURDATE())
+	        GROUP BY resource_id
+	        HAVING usage_st = MIN(usage_st)  -- 가장 가까운 usage_st를 가진 레코드 선택
+	    )
+	; ]]>
+</select>
+<select id="getFutureUsageInfo" parameterType="Long" resultType="com.rm.dto.resource.Usage">
+	<![CDATA[
+	SELECT * 
+	FROM rm_usage
+	WHERE 
+	    usage_st > CURDATE()
+	    AND resource_id NOT IN (
+	        -- 현재 사용 중이거나 가장 가까운 예약자 명단을 제외
+	        SELECT resource_id
+	        FROM rm_usage
+	        WHERE 
+	            (usage_st <= CURDATE() AND usage_ed >= CURDATE())  -- 현재 사용 중인 항목
+	        OR (usage_st > CURDATE())  -- 가장 가까운 미래 예약 항목
+	    )
+	ORDER BY usage_st ASC;
+	]]>
 </select>
 <update id="updateUsageInfo" parameterType="com.rm.dto.resource.Usage" >
 	UPDATE rm_usage

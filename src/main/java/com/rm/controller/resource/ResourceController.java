@@ -33,6 +33,11 @@ public class ResourceController {
 		return resourceService.getResourceList(workplaceId);
 	}
 	
+	@GetMapping("api/resourceUsage/{resourceId}")
+	public ResourceDTO getResourceInfo(@PathVariable(name="resourceId") long resourceId){
+		return resourceService.getResourceInfo(resourceId);
+	}
+	
 	@PutMapping("api/resource/{resourceId}")
 	public String updateResource(
 			@PathVariable(name="resourceId") long resourceId,
