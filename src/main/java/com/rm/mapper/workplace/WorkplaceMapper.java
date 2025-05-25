@@ -21,5 +21,6 @@ public interface WorkplaceMapper {
 	public void updateWorkplaceById(WorkplaceDTO dto);
 	
 	//전체 사업장 리스트 조회
-	public List<Workplace> selectAllWorkplaces();
+	public List<Workplace> selectWorkplacesByUserId(String userId);
+	public boolean isBusinessRegNoExists(Long businessRegNo);
 }
