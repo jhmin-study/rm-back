@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 /* 기능설명 : 회원 관련 Service 클래스                                        */
 /* ************************************************************************** */
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class UserService {
 	BCryptPasswordEncoder encoder;
@@ -37,6 +36,8 @@ public class UserService {
 	// EndPoint : /api/user/checkId
 	// =========================================================================
 	public Boolean checkId(String userId) {
+		System.out.println(userId +"입력됨.");
+		
 		// 방어로직 - userId가 null이면 return false
 		if (userId == null || userId.isEmpty()) {
 			return false;

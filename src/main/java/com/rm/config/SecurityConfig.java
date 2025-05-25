@@ -96,8 +96,6 @@ public class SecurityConfig {
 		// authorizeHttpRequests --> 요청에 대한 권한을 설정하는 메소드
 		// TODO : 개발 중에는 permitAll 설정. 주소 추가할 때마다 추가해줘야 함
 		http.authorizeHttpRequests( (auth)-> auth.requestMatchers("/api/**").permitAll()
-				.requestMatchers("/api/test1").hasRole("ADMIN")
-				.requestMatchers("/api/test2").hasRole("USER")
 				.anyRequest().authenticated() 
 			);
 		
