@@ -22,5 +22,5 @@ public interface WorkplaceMapper {
 	
 	//전체 사업장 리스트 조회
 	public List<Workplace> selectWorkplacesByUserId(String userId);
-	public boolean isBusinessRegNoExists(Long businessRegNo);
+	public boolean isBusinessRegNoExists(String businessRegNo);
 }
