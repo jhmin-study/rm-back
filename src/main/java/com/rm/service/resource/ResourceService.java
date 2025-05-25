@@ -47,4 +47,14 @@ public class ResourceService {
 		remap.updateResource(rs);
 	}
 
+	public ResourceDTO getResourceInfo(long resourceId) {
+		Resource res = remap.getResourceInfo(resourceId);
+		ResourceDTO dto = new ResourceDTO();
+		dto.setResourceName(res.getResourceName());
+		dto.setPlace(res.getPlace());
+		
+		return dto;
+		
+	}
+
 }

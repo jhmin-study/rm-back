@@ -1,5 +1,7 @@
 package com.rm.controller.resource;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +36,11 @@ public class UsageController {
 	@GetMapping("/api/usage/{resourceId}")
 	public UsageDTO getUsageInfo(@PathVariable(name="resourceId") Long resourceId) {
 		return usageService.getUsageInfo(resourceId);
+	}
+	
+	@GetMapping("api/futureUsage/{resourceId}")
+	public List<UsageDTO> getFutureUsageInfo(@PathVariable(name="resourceId") Long resourceId){
+		return usageService.getFutureUsageInfo(resourceId);
 	}
 	
 	@PutMapping("/api/usage/{resourceId}")

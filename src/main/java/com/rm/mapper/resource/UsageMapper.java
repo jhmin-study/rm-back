@@ -1,5 +1,7 @@
 package com.rm.mapper.resource;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.rm.dto.resource.Usage;
@@ -12,5 +14,7 @@ public interface UsageMapper {
 	public Usage getUsageInfo(Long resourceId);
 
 	public void updateUsageInfo(Usage usage);
+
+	public List<Usage> getFutureUsageInfo(Long resourceId);
 
 }

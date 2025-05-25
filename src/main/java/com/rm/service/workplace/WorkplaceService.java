@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rm.dto.workplace.Workplace;
 import com.rm.dto.workplace.WorkplaceDTO;
+import com.rm.exception.DuplicateBusinessRegNoException;
 import com.rm.mapper.workplace.WorkplaceMapper;
 
 @Service
@@ -44,7 +46,11 @@ public class WorkplaceService {
 		
 	}
 	
+	@Transactional
 	public Long createWorkplace(WorkplaceDTO dto) {
+		if (workplaceMapper.isBusinessRegNoExists(dto.getBusinessRegNo())) {
+	        throw new DuplicateBusinessRegNoException("이미 존재하는 사업자 등록번호입니다.");
+	    }
 		Workplace workplace = new Workplace();
 		
 		workplace.setUserId(dto.getUserId());
@@ -82,8 +88,8 @@ public class WorkplaceService {
 		workplaceMapper.updateWorkplaceById(dto);
 	}
 	
-	public List<WorkplaceDTO> selectAllWorkplaces() {
-	    List<Workplace> workplaces = workplaceMapper.selectAllWorkplaces();
+	public List<WorkplaceDTO> selectWorkplacesByUserId(String userId) {
+	    List<Workplace> workplaces = workplaceMapper.selectWorkplacesByUserId(userId);
 	    List<WorkplaceDTO> dtoList = new ArrayList<>();
 
 	    for (Workplace wp : workplaces) {
@@ -105,6 +111,5 @@ public class WorkplaceService {
 
 	    return dtoList;
 	}
-
 
 }
