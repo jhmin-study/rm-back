@@ -88,6 +88,9 @@ public class WorkplaceService {
 	}
 	
 	public void updateWorkplaceById(WorkplaceDTO dto) {
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		dto.setUserId(userId);
+		System.out.println(dto);
 		workplaceMapper.updateWorkplaceById(dto);
 	}
 	
