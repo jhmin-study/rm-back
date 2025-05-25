@@ -1,8 +1,9 @@
 package com.rm.controller.user;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rm.dto.user.UserDTO;
@@ -42,7 +43,6 @@ public class UserController {
 	// =========================================================================
 	@PostMapping("/api/user/signup")
 	public String Signup(@RequestBody UserDTO userDTO) {
-		System.out.println(userDTO.getUserId());
 		// 회원가입 처리
 		Boolean res = userService.Signup(userDTO);
 		
@@ -54,6 +54,18 @@ public class UserController {
 		}
 	}
 	
+	// =========================================================================
+	// 메소드 기능 : 회원정보 조회
+	// EndPoint : /api/user/userId
+	// 파라미터 : PathVariable userId
+	// =========================================================================
+	@GetMapping("/api/user/{userId}")
+	public UserDTO getUserInfo(@PathVariable (name="userId") String userId) {
+		
+		UserDTO dto = userService.getUserInfo(userId);
+		
+		return dto;
+	}
 }
 /* ------------------------- End of UserController -------------------------- */
 

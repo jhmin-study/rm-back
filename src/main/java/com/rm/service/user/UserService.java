@@ -108,6 +108,37 @@ public class UserService {
 		
 		return true;
 	}
+
+
+	public UserDTO getUserInfo(String userId) {
+		
+		// userId가 null이면 null Exception throw
+		if (userId == null || userId.isEmpty()) {
+			throw new IllegalArgumentException("User ID cannot be null or empty");
+		}
+		
+		// userId로 DB에서 조회
+		UserEntity user = userMapper.getUserById(userId);
+		
+		// Entity -> DTO 변환
+		if (user == null) {
+			throw new IllegalArgumentException("User not found with ID: " + userId);
+		}
+		UserDTO dto = new UserDTO();
+		dto.setUserId(user.getUserId());
+		// password -> skip
+		dto.setUserNm(user.getUserNm());
+		dto.setUserPhno(user.getUserPhno());
+		dto.setQuitYn(user.getQuitYn());
+		if (user.getQuitDt() != null) {
+			dto.setQuitDt(user.getQuitDt());
+		}
+		dto.setSignupDt(user.getSignupDt());
+		dto.setCreateDt(user.getCreateDt());
+		dto.setUpdateDt(user.getUpdateDt());
+		
+		return dto;
+	}
 	
 }   // End of Class
 /* -------------------------- End of UserService ---------------------------- */

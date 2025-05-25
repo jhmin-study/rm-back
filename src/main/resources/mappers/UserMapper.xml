@@ -39,4 +39,5 @@ FROM rm_user
 WHERE user_id = #{userId};
 </select>
 
+
 </mapper>
