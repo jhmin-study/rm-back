@@ -54,6 +54,12 @@
 		select count(*) from rm_workplace where user_id = #{userId}
 	</select>
 	
+	<select id="isBusinessRegNoExists" resultType="boolean">
+	    SELECT EXISTS (
+	        SELECT 1 FROM rm_workplace WHERE business_reg_no = #{businessRegNo}
+	    )
+	</select>
+	
 	<insert id="createWorkplace" parameterType="com.rm.dto.workplace.Workplace" useGeneratedKeys="true" keyProperty="workplaceId">
 		insert into rm_workplace (
 			user_id,

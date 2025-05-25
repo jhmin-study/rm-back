@@ -93,9 +93,9 @@ public class WorkplaceController {
 	}
 	
 	// 전체 사업장 조회
-	@GetMapping("/api/workplace")
-	public List<WorkplaceDTO> getAllWorkplaces() {
-	    return workplaceService.selectAllWorkplaces();
+	@GetMapping("/api/workplaces/{userId}")
+	public List<WorkplaceDTO> getWorkplaces(@PathVariable("userId") String userId) {
+	    return workplaceService.selectWorkplacesByUserId(userId);
 	}
 
 }
