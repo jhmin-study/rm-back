@@ -82,6 +82,7 @@ public class WorkplaceService {
 		}
 		
 		// DB에서 workplace를 참고하고 있는 테이블 (rm_resource) 에서 먼저 삭제한 다음
+		workplaceMapper.deleteWorkplaceResource(workplaceId);
 		// workplace를 삭제한다.
 		workplaceMapper.deleteWorkplace(workplaceId);
 		return true;
@@ -96,7 +97,7 @@ public class WorkplaceService {
 	
 	public List<WorkplaceDTO> selectWorkplacesByUserId() {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println(userId);
+//		System.out.println(userId);
 	    List<Workplace> workplaces = workplaceMapper.selectWorkplacesByUserId(userId);
 	    List<WorkplaceDTO> dtoList = new ArrayList<>();
 

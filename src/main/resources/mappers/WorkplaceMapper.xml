@@ -91,6 +91,12 @@
 		where workplace_id = #{workplaceId}
 	</delete>
 	
+	<delete id ="deleteWorkplaceResource">
+		delete from rm_resource 
+		where workplace_id = #{workplaceId}
+		
+	</delete>
+	
 	<update id="updateWorkplaceById" parameterType="com.rm.dto.workplace.Workplace">
 		update rm_workplace
 		set business_type_nm = #{businessTypeNm},

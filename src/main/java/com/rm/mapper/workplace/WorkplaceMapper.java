@@ -19,7 +19,8 @@ public interface WorkplaceMapper {
 	public void deleteWorkplace(Long workplaceId);
 	// 사업장 수정
 	public void updateWorkplaceById(WorkplaceDTO dto);
-	
+	// 사업장의 자원 삭제 (FK라서 먼저 삭제해야함)
+	public void deleteWorkplaceResource(Long workplaceId);
 	//전체 사업장 리스트 조회
 	public List<Workplace> selectWorkplacesByUserId(String userId);
 	public boolean isBusinessRegNoExists(String businessRegNo);
