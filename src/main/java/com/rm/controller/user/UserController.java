@@ -66,6 +66,21 @@ public class UserController {
 		
 		return dto;
 	}
+	
+	// =========================================================================
+	// 메소드 기능 : 회원 사업장 수 조회
+	// EndPoint : /api/user/wkspCnt
+	// 파라미터 : PathVariable userId
+	// =========================================================================
+	@GetMapping("/api/user/wkspCnt/{userId}")
+	public Integer getWkspCnt(@PathVariable(name="userId") String userId) {
+		
+		Integer wkspCnt = userService.getWkspCnt(userId);
+		
+		return wkspCnt;
+	}
+	
+	
 }
 /* ------------------------- End of UserController -------------------------- */
 

@@ -139,6 +139,20 @@ public class UserService {
 		
 		return dto;
 	}
+
+
+	public Integer getWkspCnt(String userId) {
+		
+		// userId가 null이면 -1 return
+		if (userId == null || userId.isEmpty()) {
+			return -1;
+		}
+		
+		// Mapper를 통해 userId가 보유한 사업장 수 조회
+		Integer wkspCnt = userMapper.getWkspCnt(userId);
+		
+		return wkspCnt != null ? wkspCnt : -1; // 오류면 -1 리턴
+	}
 	
 }   // End of Class
 /* -------------------------- End of UserService ---------------------------- */
