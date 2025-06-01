@@ -49,6 +49,7 @@
 				created_at,
 				updated_at
 		from rm_workplace where user_id = #{Id}
+		order by status, workplace_id
 	</select>
 	<select id = "countWorkplaces" resultType="int">
 		select count(*) from rm_workplace where user_id = #{userId}
