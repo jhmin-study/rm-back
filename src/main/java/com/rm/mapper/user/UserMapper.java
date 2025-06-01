@@ -22,6 +22,8 @@ public interface UserMapper {
 	// ID로 사용자 정보 조회
 	public UserEntity getUserById(String username);
 	
+	// ID로 사업장 수 조회
+	public Integer getWkspCnt(String userId);
 	
 }
 /* --------------------------- End of UserMapper ---------------------------- */

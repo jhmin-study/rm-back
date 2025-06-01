@@ -49,6 +49,7 @@
 				created_at,
 				updated_at
 		from rm_workplace where user_id = #{Id}
+		order by status, workplace_id
 	</select>
 	<select id = "countWorkplaces" resultType="int">
 		select count(*) from rm_workplace where user_id = #{userId}
@@ -89,6 +90,12 @@
 	<delete id ="deleteWorkplace">
 		delete from rm_workplace
 		where workplace_id = #{workplaceId}
+	</delete>
+	
+	<delete id ="deleteWorkplaceResource">
+		delete from rm_resource 
+		where workplace_id = #{workplaceId}
+		
 	</delete>
 	
 	<update id="updateWorkplaceById" parameterType="com.rm.dto.workplace.Workplace">

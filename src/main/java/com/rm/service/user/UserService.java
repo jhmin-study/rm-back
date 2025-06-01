@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 /* 기능설명 : 회원 관련 Service 클래스                                        */
 /* ************************************************************************** */
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class UserService {
 	BCryptPasswordEncoder encoder;
@@ -37,6 +36,8 @@ public class UserService {
 	// EndPoint : /api/user/checkId
 	// =========================================================================
 	public Boolean checkId(String userId) {
+		System.out.println(userId +"입력됨.");
+		
 		// 방어로직 - userId가 null이면 return false
 		if (userId == null || userId.isEmpty()) {
 			return false;
@@ -106,6 +107,51 @@ public class UserService {
 		}
 		
 		return true;
+	}
+
+
+	public UserDTO getUserInfo(String userId) {
+		
+		// userId가 null이면 null Exception throw
+		if (userId == null || userId.isEmpty()) {
+			throw new IllegalArgumentException("User ID cannot be null or empty");
+		}
+		
+		// userId로 DB에서 조회
+		UserEntity user = userMapper.getUserById(userId);
+		
+		// Entity -> DTO 변환
+		if (user == null) {
+			throw new IllegalArgumentException("User not found with ID: " + userId);
+		}
+		UserDTO dto = new UserDTO();
+		dto.setUserId(user.getUserId());
+		// password -> skip
+		dto.setUserNm(user.getUserNm());
+		dto.setUserPhno(user.getUserPhno());
+		dto.setQuitYn(user.getQuitYn());
+		if (user.getQuitDt() != null) {
+			dto.setQuitDt(user.getQuitDt());
+		}
+		dto.setSignupDt(user.getSignupDt());
+		dto.setCreateDt(user.getCreateDt());
+		dto.setUpdateDt(user.getUpdateDt());
+		
+		return dto;
+	}
+
+
+	public Integer getWkspCnt(String userId) {
+		
+		// userId가 null이면 -1 return
+		if (userId == null || userId.isEmpty()) {
+			return -1;
+		}
+		
+		// Mapper를 통해 userId가 보유한 사업장 수 조회
+		Integer wkspCnt = userMapper.getWkspCnt(userId);
+		
+		return wkspCnt != null ? wkspCnt : -1; // 오류면 -1 리턴
 	}
 	
 }   // End of Class

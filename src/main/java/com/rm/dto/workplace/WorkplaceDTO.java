@@ -11,7 +11,7 @@ public class WorkplaceDTO {
 	private Long workplaceId;
 	private String userId;
 	private String businessTypeNm;
-	private Long businessRegNo;
+	private String businessRegNo;
 	private String businessName;
 	private String ownerName;
 	private String phoneNumber;

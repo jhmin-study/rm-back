@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,9 +52,11 @@ public class WorkplaceService {
 		if (workplaceMapper.isBusinessRegNoExists(dto.getBusinessRegNo())) {
 	        throw new DuplicateBusinessRegNoException("이미 존재하는 사업자 등록번호입니다.");
 	    }
+		
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		Workplace workplace = new Workplace();
 		
-		workplace.setUserId(dto.getUserId());
+		workplace.setUserId(userId);
 		workplace.setBusinessTypeNm(dto.getBusinessTypeNm());
 		workplace.setBusinessRegNo(dto.getBusinessRegNo());
 		workplace.setBusinessName(dto.getBusinessName());
@@ -72,23 +75,29 @@ public class WorkplaceService {
 	}
 	
 	public Boolean deleteWorkplace(Long workplaceId) {
-		Workplace wp = workplaceMapper.selectWorkplaceById(workplaceId); // userid 추가해야 할지도
+		Workplace wp = workplaceMapper.selectWorkplaceById(workplaceId);
 		
 		if(wp == null) {
 			return false;
 		}
 		
 		// DB에서 workplace를 참고하고 있는 테이블 (rm_resource) 에서 먼저 삭제한 다음
+		workplaceMapper.deleteWorkplaceResource(workplaceId);
 		// workplace를 삭제한다.
 		workplaceMapper.deleteWorkplace(workplaceId);
 		return true;
 	}
 	
 	public void updateWorkplaceById(WorkplaceDTO dto) {
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		dto.setUserId(userId);
+		System.out.println(dto);
 		workplaceMapper.updateWorkplaceById(dto);
 	}
 	
-	public List<WorkplaceDTO> selectWorkplacesByUserId(String userId) {
+	public List<WorkplaceDTO> selectWorkplacesByUserId() {
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+//		System.out.println(userId);
 	    List<Workplace> workplaces = workplaceMapper.selectWorkplacesByUserId(userId);
 	    List<WorkplaceDTO> dtoList = new ArrayList<>();
 

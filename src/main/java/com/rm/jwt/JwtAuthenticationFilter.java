@@ -3,6 +3,8 @@ package com.rm.jwt;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -96,11 +98,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			role = auth.getAuthority();
 		}
 		
-		String token = jwtUtils.createJwt(userId, role, 60*300L );  // 30분으로 설정
+		String token = jwtUtils.createJwt(userId, role, 30*60*1000L );  // 30분으로 설정
 		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, String> responseBody = new HashMap<>();
+		
+		responseBody.put("userId", userId);
+		responseBody.put("token", token);
+		
+		response.getWriter().write(mapper.writeValueAsString(responseBody));
 		
 		response.addHeader("Authorization",  "Bearer " + token);
-
+		
 	}
 	
 	// 로그인 실패하면 무엇을 할지 설정하는 메소드
