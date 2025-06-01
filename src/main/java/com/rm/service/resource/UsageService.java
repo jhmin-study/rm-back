@@ -66,4 +66,9 @@ public class UsageService {
 	public List<LocalDate> getDisabledDate(Long resourceId){
 		return usageMapper.getDisabledDate(resourceId);
 	}
+
+	public void deleteUsage(Long usageId) {
+		usageMapper.deleteUsage(usageId);
+		
+	}
 }

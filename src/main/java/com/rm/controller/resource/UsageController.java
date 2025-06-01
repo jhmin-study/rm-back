@@ -3,6 +3,7 @@ package com.rm.controller.resource;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,5 +54,10 @@ public class UsageController {
 	@GetMapping("/api/resource/{resourceId}/usedDate")
 	public List<LocalDate> getDisabledDate(@PathVariable(name="resourceId") Long resourceId){
 		return usageService.getDisabledDate(resourceId);
+	}
+	
+	@DeleteMapping("/api/usage/{usageId}")
+	public void deleteUsage(@PathVariable(name="usageId") Long usageId) {
+		usageService.deleteUsage(usageId);
 	}
 }

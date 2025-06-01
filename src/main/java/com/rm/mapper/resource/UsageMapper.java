@@ -18,4 +18,6 @@ public interface UsageMapper {
 	
 	public List<LocalDate> getDisabledDate(Long resourceId);
 
+	public void deleteUsage(Long usageId);
+
 }

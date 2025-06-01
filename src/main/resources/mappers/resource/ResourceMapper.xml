@@ -16,6 +16,7 @@
 </insert>
    <resultMap id="resourceResultMap" type="com.rm.dto.resource.Resource">
        <id property="resourceId" column="resource_id" />
+       <result property="workplaceId" column="workplace_id" />
        <result property="resourceName" column="resource_name" />
        <result property="place" column="place" />
        
@@ -89,9 +90,11 @@
 <select id="getResourceInfo" parameterType="Long" resultMap="resourceResultMap">
 	<![CDATA[
 	    SELECT
+	    	r.workplace_id,
 	        r.resource_id,
 	        r.resource_name,
 	        r.place,
+	        u.usage_id,
 	        u.usage_status,
 	        u.resource_user_name,
 	        u.resource_user_phone,

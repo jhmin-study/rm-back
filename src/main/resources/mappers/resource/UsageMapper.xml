@@ -88,4 +88,8 @@
 	ORDER BY usage_date;
 	]]>
 </select>
+<delete id="deleteUsage" parameterType="Long">
+	DELETE FROM rm_usage
+	WHERE usage_id = #{usageId}
+</delete>
 </mapper>

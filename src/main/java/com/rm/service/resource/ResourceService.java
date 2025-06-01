@@ -67,10 +67,12 @@ public class ResourceService {
 		ResourceDTO dto = new ResourceDTO();
 		dto.setResourceName(res.getResourceName());
 		dto.setPlace(res.getPlace());
+		dto.setWorkplaceId(res.getWorkplaceId());
 		
 		Usage usage = res.getResourceUsage();
 		if(usage != null) {
 			UsageDTO usdto = new UsageDTO();
+			usdto.setUsageId(res.getResourceUsage().getUsageId());
 			usdto.setUsageStatus(res.getResourceUsage().getUsageStatus());
 			usdto.setResourceUserName(res.getResourceUsage().getResourceUserName());
 			usdto.setResourceUserPhone(res.getResourceUsage().getResourceUserPhone());
