@@ -5,7 +5,7 @@
 <insert id="createUsage" parameterType="com.rm.dto.resource.Usage">
 	INSERT INTO rm_usage
 	(usage_status,
-	resource_id = #{resourceId} 
+	resource_id,
 	resource_user_name, 
 	resource_user_phone, 
 	resource_user_email, 
@@ -13,6 +13,7 @@
 	usage_st, 
 	usage_ed)
 	VALUES (#{usageStatus},
+	#{resourceId},
 	#{resourceUserName},
 	#{resourceUserPhone},
 	#{resourceUserEmail},
@@ -20,44 +21,17 @@
 	#{usageSt},
 	#{usageEd})
 </insert>
-<select id="getUsageInfo" parameterType="Integer" resultType="com.rm.dto.resource.Usage">
-	<![CDATA[
-	SELECT * FROM rm_usage
-	WHERE 
-	(
-        -- 현재 날짜가 usage_st와 usage_ed 사이에 포함되는 경우
-        (usage_st <= CURDATE() AND usage_ed >= CURDATE())
-        
-        -- 또는 usage_st가 현재 시간과 가장 가까운 경우 (미래에 예약된 경우)
-        OR (usage_st > CURDATE())
-	    )
-	    AND resource_id IN (
-	        -- 각 resource_id별로 가장 가까운 사용 내역을 선택
-	        SELECT resource_id
-	        FROM rm_usage
-	        WHERE 
-	            (usage_st <= CURDATE() AND usage_ed >= CURDATE())
-	        OR (usage_st > CURDATE())
-	        GROUP BY resource_id
-	        HAVING usage_st = MIN(usage_st)  -- 가장 가까운 usage_st를 가진 레코드 선택
-	    )
-	; ]]>
-</select>
+
 <select id="getFutureUsageInfo" parameterType="Long" resultType="com.rm.dto.resource.Usage">
 	<![CDATA[
-	SELECT * 
-	FROM rm_usage
-	WHERE 
-	    usage_st > CURDATE()
-	    AND resource_id NOT IN (
-	        -- 현재 사용 중이거나 가장 가까운 예약자 명단을 제외
-	        SELECT resource_id
-	        FROM rm_usage
-	        WHERE 
-	            (usage_st <= CURDATE() AND usage_ed >= CURDATE())  -- 현재 사용 중인 항목
-	        OR (usage_st > CURDATE())  -- 가장 가까운 미래 예약 항목
-	    )
-	ORDER BY usage_st ASC;
+	select * from rm_usage a
+    where a.usage_id != (
+		select usage_id from rm_usage where (
+			usage_st <= CURDATE() AND usage_ed >= CURDATE())  -- 현재 사용 중인 항목
+	        OR (usage_st > CURDATE()
+	    ) and resource_id = #{resourceId} order by usage_st limit 1
+	) 
+    and a.resource_id = #{resourceId} and usage_st >= now();
 	]]>
 </select>
 <update id="updateUsageInfo" parameterType="com.rm.dto.resource.Usage" >
@@ -72,4 +46,46 @@
 	usage_ed = #{usageEd}
 	WHERE resource_id = #{resourceId}
 </update>
+<select id="getDisabledDate" parameterType="long" resultType="java.time.LocalDate">
+	<![CDATA[
+	WITH RECURSIVE date_sequence AS (
+	  -- 초기 날짜: 모든 usage_st를 기준으로 시작
+	  SELECT 
+	    usage_id,
+	    resource_id,
+	    usage_status,
+	    resource_user_name,
+	    resource_user_phone,
+	    resource_user_email,
+	    resource_user_note,
+	    usage_st,
+	    usage_ed,
+	    usage_st AS usage_date
+	  FROM rm_usage where resource_id = #{resourceId}
+	
+	  UNION ALL
+	  
+  	  -- usage_date가 usage_ed보다 작을 때까지 하루씩 증가	
+	  SELECT 
+	    ds.usage_id,
+	    ds.resource_id,
+	    ds.usage_status,
+	    ds.resource_user_name,
+	    ds.resource_user_phone,
+	    ds.resource_user_email,
+	    ds.resource_user_note,
+	    ds.usage_st,
+	    ds.usage_ed,
+	    DATE_ADD(ds.usage_date, INTERVAL 1 DAY)
+	  FROM date_sequence ds
+	  WHERE DATE_ADD(ds.usage_date, INTERVAL 1 DAY) <= ds.usage_ed and resource_id = #{resourceId}
+	)
+	
+	-- 결과 출력
+	SELECT 
+	distinct usage_date
+	FROM date_sequence
+	ORDER BY usage_date;
+	]]>
+</select>
 </mapper>

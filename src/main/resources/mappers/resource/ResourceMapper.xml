@@ -25,8 +25,10 @@
            <id property="usageId" column="usage_id" />
 	       <result property="resourceId" column="usage_resource_id" />
 	       <result property="usageStatus" column="usage_status" />
-	       <result property="resourceUserName" column="reource_user_name" />
+	       <result property="resourceUserName" column="resource_user_name" />
 	       <result property="resourceUserPhone" column="resource_user_phone" />
+	       <result property="resourceUserEmail" column="resource_user_email" />
+	       <result property="resourceUserNote" column="resource_user_note" />
 	       <result property="usageSt" column="usage_st" />
 	       <result property="usageEd" column="usage_ed" />
        </association>
@@ -39,7 +41,7 @@
 	        r.place,
 	        u.usage_status,
 	        u.resource_user_name,
-	        u.resource_user_phone,
+	        u.resource_user_phone,	        
 	        u.usage_st,
 	        u.usage_ed
 	    FROM rm_resource r
@@ -79,7 +81,12 @@
 	    ORDER BY r.resource_id ASC;
 	 ]]>
 	</select>
-<select id="getResourceInfo" parameterType="Long" resultType="com.rm.dto.resource.Resource">
+	<select id="getResourceNamePlace" parameterType="long" resultType="com.rm.dto.resource.Resource">
+		SELECT resource_name, place
+		FROM rm_resource
+		WHERE resource_id = #{resourceId};
+	</select>
+<select id="getResourceInfo" parameterType="Long" resultMap="resourceResultMap">
 	<![CDATA[
 	    SELECT
 	        r.resource_id,
@@ -88,6 +95,8 @@
 	        u.usage_status,
 	        u.resource_user_name,
 	        u.resource_user_phone,
+	        u.resource_user_email,
+	        u.resource_user_note,
 	        u.usage_st,
 	        u.usage_ed
 	    FROM rm_resource r

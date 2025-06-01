@@ -1,5 +1,6 @@
 package com.rm.controller.resource;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class UsageController {
 		this.usageService = usageService;
 	}
 	
-	@PostMapping("/api/usage/{resourceId}")
+	@PostMapping("/api/resource/{resourceId}/usage")
 	public String createUsage(
 			@RequestBody UsageDTO dto,
 			@PathVariable(name="resourceId") Long resourceId) {
@@ -33,12 +34,7 @@ public class UsageController {
 		}
 	}
 	
-	@GetMapping("/api/usage/{resourceId}")
-	public UsageDTO getUsageInfo(@PathVariable(name="resourceId") Long resourceId) {
-		return usageService.getUsageInfo(resourceId);
-	}
-	
-	@GetMapping("api/futureUsage/{resourceId}")
+	@GetMapping("/api/resource/{resourceId}/futureUsage")
 	public List<UsageDTO> getFutureUsageInfo(@PathVariable(name="resourceId") Long resourceId){
 		return usageService.getFutureUsageInfo(resourceId);
 	}
@@ -52,5 +48,10 @@ public class UsageController {
 		}else {
 			return "실패";
 		}
+	}
+	
+	@GetMapping("/api/resource/{resourceId}/usedDate")
+	public List<LocalDate> getDisabledDate(@PathVariable(name="resourceId") Long resourceId){
+		return usageService.getDisabledDate(resourceId);
 	}
 }

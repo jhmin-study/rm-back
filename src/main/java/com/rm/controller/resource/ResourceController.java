@@ -20,7 +20,7 @@ public class ResourceController {
 		this.resourceService = resourceService;
 	}
 
-	@PostMapping("/api/resource/{workplaceId}")
+	@PostMapping("/api/workplace/{workplaceId}/resource")
 	public String createResource(
 			@RequestBody ResourceDTO dto,
 			@PathVariable(name="workplaceId") Long workplaceId) {
@@ -28,12 +28,17 @@ public class ResourceController {
 		return "성공";
 	}
 	
-	@GetMapping("api/resource/{workplaceId}")
+	@GetMapping("/api/workplace/{workplaceId}/resource")
 	public List<ResourceDTO> getResourceList(@PathVariable(name="workplaceId") long workplaceId){
 		return resourceService.getResourceList(workplaceId);
 	}
 	
-	@GetMapping("api/resourceUsage/{resourceId}")
+	@GetMapping("/api/resource/{resourceId}")
+	public ResourceDTO getResourceNamePlace(@PathVariable(name="resourceId") long resourceId) {
+		return resourceService.getResourceNamePlace(resourceId);
+	}
+	
+	@GetMapping("/api/resourceUsage/{resourceId}")
 	public ResourceDTO getResourceInfo(@PathVariable(name="resourceId") long resourceId){
 		return resourceService.getResourceInfo(resourceId);
 	}

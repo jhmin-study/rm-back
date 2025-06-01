@@ -1,5 +1,6 @@
 package com.rm.service.resource;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,22 +32,6 @@ public class UsageService {
 		return true;
 	}
 
-	public UsageDTO getUsageInfo(Long resourceId) {
-		Usage usage = usageMapper.getUsageInfo(resourceId);
-		
-		UsageDTO dto = new UsageDTO();
-		dto.setUsageStatus(usage.getUsageStatus());
-		dto.setResourceUserName(usage.getResourceUserName());
-		dto.setResourceUserPhone(usage.getResourceUserPhone());
-		dto.setResourceUserEmail(usage.getResourceUserEmail());
-		dto.setResourceUserNote(usage.getResourceUserNote());
-		dto.setUsageSt(usage.getUsageSt());
-		dto.setUsageEd(usage.getUsageEd());
-		
-		return dto;
-		
-	}
-
 	public boolean updateUsageInfo(UsageDTO dto, Long resourceId) {
 		Usage usage = new Usage();
 		usage.setResourceUserName(dto.getResourceUserName());
@@ -76,5 +61,9 @@ public class UsageService {
 			fulist.add(dto);
 		}
 		return fulist;
+	}
+	
+	public List<LocalDate> getDisabledDate(Long resourceId){
+		return usageMapper.getDisabledDate(resourceId);
 	}
 }

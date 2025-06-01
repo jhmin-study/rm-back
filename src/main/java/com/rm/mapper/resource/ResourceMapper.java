@@ -17,4 +17,6 @@ public interface ResourceMapper {
 	public void updateResource(Resource rs);
 
 	public Resource getResourceInfo(long resourceId);
+
+	public Resource getResourceNamePlace(long resourceId);
 }

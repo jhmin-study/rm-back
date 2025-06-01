@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.rm.dto.resource.Resource;
 import com.rm.dto.resource.ResourceDTO;
+import com.rm.dto.resource.Usage;
+import com.rm.dto.resource.UsageDTO;
 import com.rm.mapper.resource.ResourceMapper;
 
 @Service
@@ -29,11 +31,24 @@ public class ResourceService {
 		List<Resource> resourceList = remap.getResourceList(workplaceId);
 		List<ResourceDTO> dtoList = new ArrayList<>();
 		for (Resource resource : resourceList) {
-			ResourceDTO dto = new ResourceDTO();
+			ResourceDTO dto = new ResourceDTO();			
 			dto.setResourceId(resource.getResourceId());
 			dto.setResourceName(resource.getResourceName());
 			dto.setPlace(resource.getPlace());
-			dto.setResourceUsage(resource.getResourceUsage());
+			
+			Usage checkUsageNull = resource.getResourceUsage();
+			if(checkUsageNull != null) {				
+				UsageDTO usagedto = new UsageDTO();
+				usagedto.setUsageStatus(resource.getResourceUsage().getUsageStatus());
+				usagedto.setResourceUserName(resource.getResourceUsage().getResourceUserName());
+				usagedto.setResourceUserPhone(resource.getResourceUsage().getResourceUserPhone());
+				usagedto.setResourceUserEmail(resource.getResourceUsage().getResourceUserEmail());
+				usagedto.setResourceUserNote(resource.getResourceUsage().getResourceUserNote());
+				usagedto.setUsageSt(resource.getResourceUsage().getUsageSt());
+				usagedto.setUsageEd(resource.getResourceUsage().getUsageEd());
+				dto.setResourceUsage(usagedto);
+			}
+			
 			dtoList.add(dto);
 		}
 		return dtoList;
@@ -53,8 +68,29 @@ public class ResourceService {
 		dto.setResourceName(res.getResourceName());
 		dto.setPlace(res.getPlace());
 		
+		Usage usage = res.getResourceUsage();
+		if(usage != null) {
+			UsageDTO usdto = new UsageDTO();
+			usdto.setUsageStatus(res.getResourceUsage().getUsageStatus());
+			usdto.setResourceUserName(res.getResourceUsage().getResourceUserName());
+			usdto.setResourceUserPhone(res.getResourceUsage().getResourceUserPhone());
+			usdto.setResourceUserEmail(res.getResourceUsage().getResourceUserEmail());
+			usdto.setResourceUserNote(res.getResourceUsage().getResourceUserNote());
+			usdto.setUsageSt(res.getResourceUsage().getUsageSt());
+			usdto.setUsageEd(res.getResourceUsage().getUsageEd());
+			dto.setResourceUsage(usdto);
+		}
+		
 		return dto;
 		
+	}
+
+	public ResourceDTO getResourceNamePlace(long resourceId) {
+		Resource rs = remap.getResourceNamePlace(resourceId);
+		ResourceDTO dtodto = new ResourceDTO();
+		dtodto.setResourceName(rs.getResourceName());
+		dtodto.setPlace(rs.getPlace());
+		return dtodto;
 	}
 
 }

@@ -16,4 +16,18 @@ public class Resource {
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
     private Usage resourceUsage;
+    
+    @Override
+    public String toString() {
+    	String res = "{";
+    	res += "resourceId : " + resourceId + "\n";
+    	res += "workplaceId : " + workplaceId + "\n";
+    	res += "resourceName : " + resourceName + "\n";
+    	res += "place : " + place + "\n";
+    	res += "createdAt : " + createdAt + "\n";
+    	res += "updatedAt : " + updatedAt + "\n";
+    	res += "resourceUsage : " + resourceUsage + "\n";
+    	res += "}\n";
+    	return res;
+    }
 }
