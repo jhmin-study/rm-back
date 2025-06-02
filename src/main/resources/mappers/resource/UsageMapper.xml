@@ -44,7 +44,7 @@
 	resource_user_note = #{resourceUserNote},
 	usage_st = #{usageSt},
 	usage_ed = #{usageEd}
-	WHERE resource_id = #{resourceId}
+	WHERE usage_id = #{usageId}
 </update>
 <select id="getDisabledDate" parameterType="long" resultType="java.time.LocalDate">
 	<![CDATA[
@@ -92,4 +92,16 @@
 	DELETE FROM rm_usage
 	WHERE usage_id = #{usageId}
 </delete>
+<update id="updateUsageStatus">
+	<![CDATA[
+	UPDATE rm_usage
+	SET usage_status = 
+	  CASE 
+	    WHEN CURDATE() < usage_st THEN '예약'
+	    WHEN CURDATE() BETWEEN usage_st AND usage_ed THEN '사용중'
+	    WHEN CURDATE() > usage_ed THEN '사용 종료'
+	    ELSE usage_status -- 혹시 모를 예외 처리
+	  END;
+	]]>
+</update>
 </mapper>

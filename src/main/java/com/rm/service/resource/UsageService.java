@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.rm.dto.resource.Usage;
@@ -32,7 +33,7 @@ public class UsageService {
 		return true;
 	}
 
-	public boolean updateUsageInfo(UsageDTO dto, Long resourceId) {
+	public boolean updateUsageInfo(UsageDTO dto, Long usageId) {
 		Usage usage = new Usage();
 		usage.setResourceUserName(dto.getResourceUserName());
 		usage.setResourceUserPhone(dto.getResourceUserPhone());
@@ -41,7 +42,7 @@ public class UsageService {
 		usage.setUsageStatus(dto.getUsageStatus());
 		usage.setUsageSt(dto.getUsageSt());
 		usage.setUsageEd(dto.getUsageEd());
-		usage.setResourceId(resourceId);
+		usage.setUsageId(usageId);
 		usageMapper.updateUsageInfo(usage);
 		return true;
 	}
@@ -51,6 +52,8 @@ public class UsageService {
 		List<UsageDTO> fulist = new ArrayList<>();
 		for(Usage usage : futureUsageList) {
 			UsageDTO dto = new UsageDTO();
+			dto.setResourceId(usage.getResourceId());
+			dto.setUsageId(usage.getUsageId());
 			dto.setResourceUserName(usage.getResourceUserName());
 			dto.setResourceUserPhone(usage.getResourceUserPhone());
 			dto.setResourceUserEmail(usage.getResourceUserEmail());
@@ -67,8 +70,14 @@ public class UsageService {
 		return usageMapper.getDisabledDate(resourceId);
 	}
 
-	public void deleteUsage(Long usageId) {
+	public boolean deleteUsage(Long usageId) {
 		usageMapper.deleteUsage(usageId);
+		return true;
 		
+	}
+	
+	@Scheduled(cron = "0 0 0 * * ?") // 매일 자정 실행
+	public void autoUpdateUsageStatus() {
+	    usageMapper.updateUsageStatus();
 	}
 }

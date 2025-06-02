@@ -40,11 +40,11 @@ public class UsageController {
 		return usageService.getFutureUsageInfo(resourceId);
 	}
 	
-	@PutMapping("/api/usage/{resourceId}")
+	@PutMapping("/api/usage/{usageId}")
 	public String updateUsageInfo(
 			@RequestBody UsageDTO dto,
-			@PathVariable(name="resourceId") Long resourceId) {
-		if(usageService.updateUsageInfo(dto, resourceId)) {			
+			@PathVariable(name="usageId") Long usageId) {
+		if(usageService.updateUsageInfo(dto, usageId)) {			
 			return "성공";
 		}else {
 			return "실패";
@@ -57,7 +57,11 @@ public class UsageController {
 	}
 	
 	@DeleteMapping("/api/usage/{usageId}")
-	public void deleteUsage(@PathVariable(name="usageId") Long usageId) {
-		usageService.deleteUsage(usageId);
+	public String deleteUsage(@PathVariable(name="usageId") Long usageId) {
+		if(usageService.deleteUsage(usageId)) {
+			return "성공";
+		}else {
+			return "실패";
+		}
 	}
 }

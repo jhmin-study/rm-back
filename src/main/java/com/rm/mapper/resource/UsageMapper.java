@@ -20,4 +20,6 @@ public interface UsageMapper {
 
 	public void deleteUsage(Long usageId);
 
+	public void updateUsageStatus();
+
 }
