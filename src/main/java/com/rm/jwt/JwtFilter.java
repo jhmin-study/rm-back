@@ -1,12 +1,20 @@
 package com.rm.jwt;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rm.dto.user.CustomUserDetails;
 import com.rm.dto.user.UserDTO;
 import com.rm.dto.user.UserEntity;
@@ -27,12 +35,15 @@ public class JwtFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		// response를 ContentCachingResponseWraper 클래스로 변경
+		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+		
 		// jwt를 찾아서 검증하는 기능
 		String authToken = request.getHeader("Authorization"); // "Bearer fweoiuhfweoighogiuhowghew"
 		
 		if(authToken == null || ! authToken.startsWith("Bearer ")) {
-			filterChain.doFilter(request, response);
+			filterChain.doFilter(request, responseWrapper);
 			return;
 		}
 		System.out.println("JWT 검증 시작!");
@@ -41,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		
 		if(jwtUtils.isExpired(jwt)) {
 			System.out.println("token이 만료된 토큰임");
-			filterChain.doFilter(request, response);
+			filterChain.doFilter(request, responseWrapper);
 			return;
 		}
 		
@@ -62,8 +73,40 @@ public class JwtFilter extends OncePerRequestFilter {
 		// auth를 세션에 등록
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		
-		filterChain.doFilter(request, response);
+		filterChain.doFilter(request, responseWrapper);
 		
+		// userId
+		String userId = customUserDetails.getUsername();
+		System.out.println(userId);
+		// userRole
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		String role = null;
+		for( GrantedAuthority authEntity : authorities) {
+			role = authEntity.getAuthority();
+		}
+		
+		String token = jwtUtils.createJwt(userId, role, 30*60*1000L );  // 30분으로 설정
+		
+//		responseBody.put("userId", userId);
+//		responseBody.put("token", token);
+		System.out.println("response 수정");
+		// responseWrapper에서 수정
+		byte[] responseArray = responseWrapper.getContentAsByteArray();
+		String responseStr = new String(responseArray, responseWrapper.getCharacterEncoding());
+		
+		JsonNode node = new ObjectMapper().readTree(responseStr);
+		((ObjectNode)node).put("userId", userId);
+		((ObjectNode)node).put("token", token);
+		
+		String newResponse = new ObjectMapper().writeValueAsString(node);
+		response.setContentType("application/json");
+		response.setContentLength(newResponse.length());
+		response.getOutputStream().write(newResponse.getBytes());
+		
+//		response.getWriter().write(mapper.writeValueAsString(responseBody));
+//		response.addHeader("Authorization",  "Bearer " + token);
+		
+		System.out.println("토큰발급 끝 : " + newResponse);
 		
 	}
 
