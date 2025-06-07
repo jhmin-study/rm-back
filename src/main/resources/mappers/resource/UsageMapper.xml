@@ -27,11 +27,12 @@
 	select * from rm_usage a
     where a.usage_id != (
 		select usage_id from rm_usage where (
-			usage_st <= CURDATE() AND usage_ed >= CURDATE())  -- 현재 사용 중인 항목
-	        OR (usage_st > CURDATE()
+			(usage_st <= CURDATE() AND usage_ed >= CURDATE())  -- 현재 사용 중인 항목
+	        OR (usage_st > CURDATE())
 	    ) and resource_id = #{resourceId} order by usage_st limit 1
 	) 
-    and a.resource_id = #{resourceId} and usage_st >= now();
+    and a.resource_id = #{resourceId} and usage_st >= now()
+    order by usage_st asc;
 	]]>
 </select>
 <update id="updateUsageInfo" parameterType="com.rm.dto.resource.Usage" >
