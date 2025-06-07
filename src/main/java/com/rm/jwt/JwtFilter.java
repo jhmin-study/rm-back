@@ -36,14 +36,12 @@ public class JwtFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		// response를 ContentCachingResponseWraper 클래스로 변경
-		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
 		
 		// jwt를 찾아서 검증하는 기능
 		String authToken = request.getHeader("Authorization"); // "Bearer fweoiuhfweoighogiuhowghew"
 		
 		if(authToken == null || ! authToken.startsWith("Bearer ")) {
-			filterChain.doFilter(request, responseWrapper);
+			filterChain.doFilter(request, response);
 			return;
 		}
 		System.out.println("JWT 검증 시작!");
@@ -52,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		
 		if(jwtUtils.isExpired(jwt)) {
 			System.out.println("token이 만료된 토큰임");
-			filterChain.doFilter(request, responseWrapper);
+			filterChain.doFilter(request, response);
 			return;
 		}
 		
@@ -72,6 +70,9 @@ public class JwtFilter extends OncePerRequestFilter {
 		
 		// auth를 세션에 등록
 		SecurityContextHolder.getContext().setAuthentication(auth);
+		
+		// response를 ContentCachingResponseWraper 클래스로 변경
+		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
 		
 		filterChain.doFilter(request, responseWrapper);
 		
@@ -93,8 +94,16 @@ public class JwtFilter extends OncePerRequestFilter {
 		// responseWrapper에서 수정
 		byte[] responseArray = responseWrapper.getContentAsByteArray();
 		String responseStr = new String(responseArray, responseWrapper.getCharacterEncoding());
+		// 빈 배열일 경우 빈 객체로 변환
+		if (responseStr.equals("[]")) {
+			responseStr = "{}";
+		}
 		
 		JsonNode node = new ObjectMapper().readTree(responseStr);
+		
+		System.out.println("responseStr : " + responseStr);
+		System.out.println("node : " + node.getClass().getName());
+		
 		((ObjectNode)node).put("userId", userId);
 		((ObjectNode)node).put("token", token);
 		
