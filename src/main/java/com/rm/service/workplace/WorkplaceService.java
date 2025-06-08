@@ -96,8 +96,9 @@ public class WorkplaceService {
 	}
 	
 	public List<WorkplaceDTO> selectWorkplacesByUserId() {
+
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-//		System.out.println(userId);
+
 	    List<Workplace> workplaces = workplaceMapper.selectWorkplacesByUserId(userId);
 	    List<WorkplaceDTO> dtoList = new ArrayList<>();
 
