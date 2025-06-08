@@ -49,13 +49,13 @@ CREATE TABLE rm_workplace (
 
 DROP TABLE IF EXISTS rm_resource;
 CREATE TABLE rm_resource(
-	workplace_id BIGINT,
-    	resource_id BIGINT primary key auto_increment,
-    	resource_name VARCHAR(255) NOT NULL,
-    	place VARCHAR(255) NOT NULL,
-    	created_dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    	updated_dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    	foreign key(workplace_id) REFERENCES rm_workplace (workplace_id)
+   	workplace_id BIGINT,
+	resource_id BIGINT primary key auto_increment,
+	resource_name VARCHAR(255) NOT NULL,
+	place VARCHAR(255) NOT NULL,
+	created_dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT fk_workplace foreign key(workplace_id) REFERENCES rm_workplace (workplace_id)
 );
   
   
@@ -63,14 +63,14 @@ DROP TABLE IF EXISTS rm_usage;
 CREATE TABLE rm_usage(
 	usage_id BIGINT primary key AUTO_INCREMENT,
    	resource_id BIGINT,
-    	usage_status VARCHAR(255) NOT NULL,
+	usage_status VARCHAR(255) NOT NULL,
      	resource_user_name VARCHAR(255) NOT NULL,
-    	resource_user_phone INT NOT NULL,
-    	resource_user_email VARCHAR(255),
-    	resource_user_note TEXT,
-    	usage_st DATE NOT NULL,
-	usage_ed DATE NOT NULL,
-    	foreign key(resource_id) REFERENCES rm_resource(resource_id)
+      	resource_user_phone VARCHAR(255) NOT NULL,
+      	resource_user_email VARCHAR(255),
+      	resource_user_note TEXT,
+      	usage_st DATE NOT NULL,
+    	usage_ed DATE NOT NULL,
+      	CONSTRAINT fk_resource foreign key(resource_id) REFERENCES rm_resource(resource_id)
 );
 		
 ```
