@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.rm.dto.resource.Resource;
 import com.rm.dto.resource.ResourceDTO;
+import com.rm.dto.resource.Usage;
 
 @Mapper
 public interface ResourceMapper {

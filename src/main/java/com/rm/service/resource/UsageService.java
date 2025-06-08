@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.rm.dto.resource.ResourceDTO;
 import com.rm.dto.resource.Usage;
 import com.rm.dto.resource.UsageDTO;
 import com.rm.mapper.resource.UsageMapper;
@@ -79,5 +80,29 @@ public class UsageService {
 	@Scheduled(cron = "0 0 0 * * ?") // 매일 자정 실행
 	public void autoUpdateUsageStatus() {
 	    usageMapper.updateUsageStatus();
+	}
+
+	public List<LocalDate> getDisabledDateExceptThis(Long resourceId) {
+		return usageMapper.getDisabledDateExceptThis(resourceId);
+	}
+	
+
+	public List<UsageDTO> getUsageHistory(Long resourceId) {
+		List<Usage> usageList = usageMapper.getUsageHistory(resourceId);
+		List<UsageDTO> usageDTO = new ArrayList<>();
+		for(Usage usage : usageList) {
+			UsageDTO dto = new UsageDTO();
+			dto.setResourceId(usage.getResourceId());
+			dto.setUsageId(usage.getUsageId());
+			dto.setResourceUserName(usage.getResourceUserName());
+			dto.setResourceUserPhone(usage.getResourceUserPhone());
+			dto.setResourceUserEmail(usage.getResourceUserEmail());
+			dto.setResourceUserNote(usage.getResourceUserNote());
+			dto.setUsageSt(usage.getUsageSt());
+			dto.setUsageEd(usage.getUsageEd());
+			
+			usageDTO.add(dto);
+		}
+		return usageDTO;
 	}
 }

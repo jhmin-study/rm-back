@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.rm.dto.resource.Resource;
 import com.rm.dto.resource.Usage;
 
 @Mapper
@@ -18,8 +19,12 @@ public interface UsageMapper {
 	
 	public List<LocalDate> getDisabledDate(Long resourceId);
 
+	public List<LocalDate> getDisabledDateExceptThis(Long resourceId);
+
 	public void deleteUsage(Long usageId);
 
 	public void updateUsageStatus();
+	
+	public List<Usage> getUsageHistory(Long resourceId);
 
 }

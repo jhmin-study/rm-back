@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rm.dto.resource.UsageDTO;
 import com.rm.service.resource.UsageService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class UsageController {
@@ -55,6 +57,11 @@ public class UsageController {
 	public List<LocalDate> getDisabledDate(@PathVariable(name="resourceId") Long resourceId){
 		return usageService.getDisabledDate(resourceId);
 	}
+
+	@GetMapping("/api/resource/{resourceId}/another/usedDate")
+	public List<LocalDate> getDisabledDateExceptThis(@PathVariable(name="resourceId") Long resourceId){
+		return usageService.getDisabledDateExceptThis(resourceId);
+	}
 	
 	@DeleteMapping("/api/usage/{usageId}")
 	public String deleteUsage(@PathVariable(name="usageId") Long usageId) {
@@ -63,5 +70,10 @@ public class UsageController {
 		}else {
 			return "실패";
 		}
+	}
+	
+	@GetMapping("/api/resource/{resourceId}/usage/history")
+	public List<UsageDTO> getUsageHistory(@PathVariable(name="resourceId") Long resourceId) {
+		return usageService.getUsageHistory(resourceId);
 	}
 }
