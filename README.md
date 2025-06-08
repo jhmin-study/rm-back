@@ -61,16 +61,16 @@ CREATE TABLE rm_resource(
   
 DROP TABLE IF EXISTS rm_usage; 
 CREATE TABLE rm_usage(
- 	usage_id BIGINT primary key AUTO_INCREMENT,
+	usage_id BIGINT primary key AUTO_INCREMENT,
    	resource_id BIGINT,
-      usage_status VARCHAR(255) NOT NULL,
+	usage_status VARCHAR(255) NOT NULL,
      	resource_user_name VARCHAR(255) NOT NULL,
-      resource_user_phone VARCHAR(255) NOT NULL,
-      resource_user_email VARCHAR(255),
-      resource_user_note TEXT,
-      usage_st DATE NOT NULL,
+      	resource_user_phone VARCHAR(255) NOT NULL,
+      	resource_user_email VARCHAR(255),
+      	resource_user_note TEXT,
+      	usage_st DATE NOT NULL,
     	usage_ed DATE NOT NULL,
-      CONSTRAINT fk_resource foreign key(resource_id) REFERENCES rm_resource(resource_id)
+      	CONSTRAINT fk_resource foreign key(resource_id) REFERENCES rm_resource(resource_id)
 );
 		
 ```
