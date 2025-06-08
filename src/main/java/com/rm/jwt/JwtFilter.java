@@ -135,7 +135,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		
 		String newResponse = new ObjectMapper().writeValueAsString(node);
 		response.setContentType("application/json");
-		response.setContentLength(newResponse.length());
+//		response.setContentLength(newResponse.length());
 		response.getOutputStream().write(newResponse.getBytes(StandardCharsets.UTF_8));
 		
 //		response.getWriter().write(mapper.writeValueAsString(responseBody));
