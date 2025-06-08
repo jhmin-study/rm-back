@@ -59,11 +59,6 @@ public class JwtFilter extends OncePerRequestFilter {
 		// 정상토큰
 		System.out.println("정상 토큰으로 확인됨!");
 		
-		// response를 ContentCachingResponseWraper 클래스로 변경
-		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
-		
-		filterChain.doFilter(request, responseWrapper);
-		
 		// user 관련 api호출이 아닌 경우 재발급 X
 		String reqURLStr = request.getRequestURL().toString();
 		System.out.println(reqURLStr);
@@ -71,16 +66,21 @@ public class JwtFilter extends OncePerRequestFilter {
 		for (String string : reqURL) {
 			System.out.println(string + ",");
 		}
-		if (!reqURL[3].equals("api") &&
-			!reqURL[4].equals("user")) {
+		if (!reqURL[3].equals("api") ||
+				!reqURL[4].equals("user")) {
+			filterChain.doFilter(request, response);
 			return;
 		}
+		// response를 ContentCachingResponseWraper 클래스로 변경
+		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+		
+		filterChain.doFilter(request, responseWrapper);
+		
 		// responseWrapper에서 수정
 		byte[] responseArray = responseWrapper.getContentAsByteArray();
 		String responseStr = new String(responseArray, StandardCharsets.UTF_8);
-		System.out.println("response : " + response.getCharacterEncoding());
-		
 		System.out.println("responseStr : " + responseStr);
+		
 		JsonNode node = new ObjectMapper().readTree(responseStr);
 		
 		// 빈 배열일 경우 빈 객체로 변환

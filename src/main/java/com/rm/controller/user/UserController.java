@@ -72,11 +72,11 @@ public class UserController {
 	// EndPoint : /api/user/wkspCnt
 	// 파라미터 : PathVariable userId
 	// =========================================================================
-	@GetMapping("/api/user/wkspCnt/{userId}")
+	@GetMapping("/api/wkspCnt/{userId}")
 	public Integer getWkspCnt(@PathVariable(name="userId") String userId) {
 		
 		Integer wkspCnt = userService.getWkspCnt(userId);
-		
+		System.out.println("wkspCnt : " + wkspCnt);
 		return wkspCnt;
 	}
 	
